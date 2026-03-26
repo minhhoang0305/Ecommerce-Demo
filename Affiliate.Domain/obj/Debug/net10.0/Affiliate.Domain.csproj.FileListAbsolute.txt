@@ -1,0 +1,11 @@
+D:\.Net\Affiliate\Affiliate.Domain\bin\Debug\net10.0\Affiliate.Domain.deps.json
+D:\.Net\Affiliate\Affiliate.Domain\bin\Debug\net10.0\Affiliate.Domain.dll
+D:\.Net\Affiliate\Affiliate.Domain\bin\Debug\net10.0\Affiliate.Domain.pdb
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.AssemblyInfoInputs.cache
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.AssemblyInfo.cs
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.csproj.CoreCompileInputs.cache
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.dll
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\refint\Affiliate.Domain.dll
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\Affiliate.Domain.pdb
+D:\.Net\Affiliate\Affiliate.Domain\obj\Debug\net10.0\ref\Affiliate.Domain.dll

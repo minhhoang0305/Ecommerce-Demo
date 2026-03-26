@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Affiliate.Api/Affiliate.Api.csproj" />
+  <Project Path="Affiliate.Application/Affiliate.Application.csproj" />
+  <Project Path="Affiliate.Domain/Affiliate.Domain.csproj" />
+  <Project Path="Affiliate.Infrastructure/Affiliate.Infrastructure.csproj" />
+</Solution>

@@ -1,0 +1,15 @@
+D:\.Net\Affiliate\Affiliate.Application\bin\Debug\net10.0\Affiliate.Application.deps.json
+D:\.Net\Affiliate\Affiliate.Application\bin\Debug\net10.0\Affiliate.Application.dll
+D:\.Net\Affiliate\Affiliate.Application\bin\Debug\net10.0\Affiliate.Application.pdb
+D:\.Net\Affiliate\Affiliate.Application\bin\Debug\net10.0\Affiliate.Domain.dll
+D:\.Net\Affiliate\Affiliate.Application\bin\Debug\net10.0\Affiliate.Domain.pdb
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.csproj.AssemblyReference.cache
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.AssemblyInfoInputs.cache
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.AssemblyInfo.cs
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.csproj.CoreCompileInputs.cache
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliat.E9BB82B9.Up2Date
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.dll
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\refint\Affiliate.Application.dll
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\Affiliate.Application.pdb
+D:\.Net\Affiliate\Affiliate.Application\obj\Debug\net10.0\ref\Affiliate.Application.dll
