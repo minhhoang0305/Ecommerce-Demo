@@ -1,4 +1,4 @@
 public interface IJwtRepository
 {
-    string GenerateToken(string email, string role);
+    string GenerateToken(Guid userId, string email, string role);
 }

@@ -12,42 +12,51 @@ public class CartRepository : ICartRepository
     public async Task<Cart?> GetByUserIdAsync(Guid userId)
     {
         return await _context.Carts
-            .Include(c => c.Items) 
+            .Include(c => c.Items)
             .FirstOrDefaultAsync(c => c.UserId == userId);
     }
 
     public async Task SaveAsync(Cart cart)
     {
-        var existingCart = await _context.Carts
+        var trackedCart = await _context.Carts
             .Include(c => c.Items)
             .FirstOrDefaultAsync(c => c.Id == cart.Id);
 
-        if (existingCart == null)
+        if (trackedCart == null)
         {
             await _context.Carts.AddAsync(cart);
         }
         else
         {
-            // update items
-            _context.Entry(existingCart).CurrentValues.SetValues(cart);
+            // update scalar
+            trackedCart.UserId = cart.UserId;
 
-            // xử lý item
+            // sync items
             foreach (var item in cart.Items)
             {
-                var existingItem = existingCart.Items
+                var existingItem = trackedCart.Items
                     .FirstOrDefault(x => x.Id == item.Id);
 
                 if (existingItem == null)
                 {
-                    existingCart.Items.Add(item);
+                    trackedCart.Items.Add(new CartItem
+                    {
+                        Id = item.Id,
+                        ProductId = item.ProductId,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    });
                 }
                 else
                 {
                     existingItem.Quantity = item.Quantity;
+                    existingItem.Price = item.Price;
+                    existingItem.Name = item.Name;
                 }
             }
         }
 
-        await _context.SaveChangesAsync(); 
+        await _context.SaveChangesAsync();
     }
 }

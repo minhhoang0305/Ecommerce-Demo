@@ -48,7 +48,6 @@ public class AddToCartHandler : IRequestHandler<AddToCartCommand, Unit>
         {
             cart.Items.Add(new CartItem
             {
-                Id = Guid.NewGuid(),
                 ProductId = product.Id,
                 Quantity = request.Quantity,
                 Name = product.Name,

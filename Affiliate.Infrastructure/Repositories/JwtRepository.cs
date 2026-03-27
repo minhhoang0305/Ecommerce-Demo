@@ -12,7 +12,7 @@ public class JwtRepository : IJwtRepository
     {
         _configuration = configuration;
     }
-    public string GenerateToken(string email, string role)
+    public string GenerateToken(Guid userId, string email, string role)
     {
         var jwtKey = _configuration["Jwt:Key"] 
                 ?? Environment.GetEnvironmentVariable("JWT_KEY");
@@ -26,6 +26,7 @@ public class JwtRepository : IJwtRepository
 
         var claims = new[]
         {
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Role, role),
             new Claim(ClaimTypes.Email, email)
         };
@@ -34,7 +35,7 @@ public class JwtRepository : IJwtRepository
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(1), // 🔥 dùng UTC
+            expires: DateTime.UtcNow.AddHours(1),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

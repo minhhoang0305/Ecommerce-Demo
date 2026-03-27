@@ -24,7 +24,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, AuthResponse>
             throw new Exception("Invalid email or password");
         return new AuthResponse
         {
-            AccessToken = _jwtRepository.GenerateToken(user.Email, user.Role),
+            AccessToken = _jwtRepository.GenerateToken(user.Id, user.Email, user.Role),
             infoUser = new 
             {
                 user.Id,
