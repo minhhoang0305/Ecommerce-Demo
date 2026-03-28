@@ -1,3 +1,4 @@
+using Affiliate.Application.DTOs;
 using MediatR;
 
-public record CheckoutCommand(Guid OrderId, string PaymentMethod) : IRequest<bool>;
+public record CheckoutCommand(Guid UserId, string PaymentMethod) : IRequest<OrderDTO>;

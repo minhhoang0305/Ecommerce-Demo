@@ -1,6 +1,7 @@
 public class Orders
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid UserId { get; set; }
     public List<OrderItems> Items { get; private set; } = new();
     public decimal TotalAmount => Items.Sum(item => item.Price * item.Quantity);
     public bool IsPaid { get; private set; }
@@ -18,5 +19,4 @@ public class Orders
     {
         IsPaid = true;
     }
-
 }

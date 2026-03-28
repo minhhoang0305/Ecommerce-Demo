@@ -1,8 +1,9 @@
 using MediatR;
+
 public static class ProductEndpoints
 {
-    
-    public static void MapProductEndpoints(this IEndpointRouteBuilder app){
+    public static void MapProductEndpoints(this IEndpointRouteBuilder app)
+    {
         app.MapPost("/api/v1/product/create", async (
             CreateCommand command,
             IMediator mediator) =>
@@ -22,10 +23,15 @@ public static class ProductEndpoints
             return Results.Ok(product);
         });
 
-        app.MapGet("/api/v1/product", async (
+        app.MapGet("/api/v1/products", async (
+            int? page,
+            int? size,
+            string? category,
+            decimal? minPrice,
+            decimal? maxPrice,
             IMediator mediator) =>
         {
-            var products = await mediator.Send(new GetByAllAsync());
+            var products = await mediator.Send(new GetProductsQuery(page ?? 1, size ?? 10, category, minPrice, maxPrice));
             return Results.Ok(products);
         });
 
@@ -45,7 +51,4 @@ public static class ProductEndpoints
             return Results.Ok(new { message = "Product updated successfully" });
         }).RequireAuthorization("AdminOnly");
     }
-
-    
-
 }

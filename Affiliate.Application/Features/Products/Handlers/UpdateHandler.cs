@@ -3,10 +3,12 @@ using MediatR;
 public class UpdateHandler : IRequestHandler<UpdateCommand, Unit>
 {
     private readonly IProductRepository _repository;
+
     public UpdateHandler(IProductRepository repository)
     {
         _repository = repository;
     }
+
     public async Task<Unit> Handle(UpdateCommand request, CancellationToken cancellationToken)
     {
         var existingProduct = await _repository.GetByIdAsync(request.Id);
@@ -16,8 +18,10 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, Unit>
         }
 
         existingProduct.Name = request.Name;
+        existingProduct.Category = request.Category;
         existingProduct.Price = request.Price;
         existingProduct.Description = request.Description;
+        existingProduct.Stock = request.Stock;
 
         await _repository.UpdateAsync(existingProduct);
         return Unit.Value;

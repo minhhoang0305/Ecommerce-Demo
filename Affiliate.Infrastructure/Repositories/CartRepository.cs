@@ -28,10 +28,8 @@ public class CartRepository : ICartRepository
         }
         else
         {
-            // update scalar
             trackedCart.UserId = cart.UserId;
 
-            // sync items
             foreach (var item in cart.Items)
             {
                 var existingItem = trackedCart.Items
@@ -57,6 +55,13 @@ public class CartRepository : ICartRepository
             }
         }
 
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ClearAsync(Cart cart)
+    {
+        _context.CartItems.RemoveRange(cart.Items);
+        _context.Carts.Remove(cart);
         await _context.SaveChangesAsync();
     }
 }
