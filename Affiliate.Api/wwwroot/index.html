@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Affiliate Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <nav class="topbar">
+                <div>
+                    <p class="eyebrow">Affiliate commerce platform</p>
+                    <a class="brand" href="/">NovaCart</a>
+                </div>
+                <div class="topbar-actions">
+                    <button id="openAuthButton" class="ghost-button">Dang nhap</button>
+                    <a class="ghost-button" href="/swagger" target="_blank" rel="noreferrer">Swagger</a>
+                </div>
+            </nav>
+
+            <div class="hero-grid">
+                <section class="hero-copy">
+                    <p class="section-kicker">Retail dashboard + storefront</p>
+                    <h1>Giao dien ban hang sang, nhanh va ket noi truc tiep voi Affiliate API.</h1>
+                    <p class="hero-text">
+                        Kham pha san pham, loc theo danh muc va gia, dang nhap JWT, them vao gio hang va checkout
+                        tren cung mot man hinh de demo he thong end-to-end.
+                    </p>
+                    <div class="hero-actions">
+                        <button id="shopNowButton" class="primary-button">Mua ngay</button>
+                        <button id="loadProductsButton" class="secondary-button">Tai san pham</button>
+                    </div>
+                    <div class="hero-metrics">
+                        <article>
+                            <strong id="metricProducts">0</strong>
+                            <span>San pham dang hien thi</span>
+                        </article>
+                        <article>
+                            <strong>JWT</strong>
+                            <span>Xac thuc truc tiep voi API</span>
+                        </article>
+                        <article>
+                            <strong>Responsive</strong>
+                            <span>Toi uu desktop va mobile</span>
+                        </article>
+                    </div>
+                </section>
+
+                <aside class="hero-panel">
+                    <div class="panel-card">
+                        <p class="panel-label">Session</p>
+                        <h2 id="sessionState">Khach truy cap</h2>
+                        <p id="sessionDetail">Dang xem catalog cong khai. Dang nhap de them vao gio va checkout.</p>
+                        <div class="panel-pills">
+                            <span class="pill">Products</span>
+                            <span class="pill">Cart</span>
+                            <span class="pill">Orders</span>
+                        </div>
+                    </div>
+                    <div class="spotlight-card">
+                        <p class="panel-label">Bo loc nhanh</p>
+                        <form id="filtersForm" class="filters-grid">
+                            <label>
+                                <span>Danh muc</span>
+                                <input id="categoryInput" name="category" type="text" placeholder="VD: Electronics">
+                            </label>
+                            <label>
+                                <span>Gia tu</span>
+                                <input id="minPriceInput" name="minPrice" type="number" min="0" step="0.01" placeholder="0">
+                            </label>
+                            <label>
+                                <span>Gia den</span>
+                                <input id="maxPriceInput" name="maxPrice" type="number" min="0" step="0.01" placeholder="5000">
+                            </label>
+                            <button class="primary-button compact-button" type="submit">Ap dung</button>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </header>
+
+        <main class="content-grid">
+            <section class="catalog-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Catalog</p>
+                        <h2>San pham noi bat</h2>
+                    </div>
+                    <div class="section-controls">
+                        <label class="page-size">
+                            <span>Moi trang</span>
+                            <select id="pageSizeSelect">
+                                <option value="6">6</option>
+                                <option value="9" selected>9</option>
+                                <option value="12">12</option>
+                            </select>
+                        </label>
+                        <button id="refreshProductsButton" class="ghost-button">Lam moi</button>
+                    </div>
+                </div>
+
+                <div id="catalogMessage" class="info-banner">Dang tai danh sach san pham...</div>
+                <div id="productGrid" class="product-grid"></div>
+
+                <div class="pagination-row">
+                    <button id="previousPageButton" class="ghost-button" type="button">Trang truoc</button>
+                    <span id="paginationLabel">Trang 1</span>
+                    <button id="nextPageButton" class="ghost-button" type="button">Trang sau</button>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <section class="card auth-card">
+                    <div class="section-heading compact">
+                        <div>
+                            <p class="section-kicker">Account</p>
+                            <h2>Dang nhap</h2>
+                        </div>
+                        <button id="logoutButton" class="ghost-button compact-button" type="button">Dang xuat</button>
+                    </div>
+
+                    <form id="loginForm" class="stack-form">
+                        <label>
+                            <span>Email</span>
+                            <input name="email" type="email" placeholder="ban@example.com" required>
+                        </label>
+                        <label>
+                            <span>Mat khau</span>
+                            <input name="password" type="password" placeholder="********" required>
+                        </label>
+                        <button class="primary-button" type="submit">Dang nhap va dong bo gio</button>
+                    </form>
+                    <p id="authMessage" class="muted-text">Chua co token. Mot so tinh nang se chi doc.</p>
+                </section>
+
+                <section class="card cart-card">
+                    <div class="section-heading compact">
+                        <div>
+                            <p class="section-kicker">Cart</p>
+                            <h2>Gio hang</h2>
+                        </div>
+                        <span id="cartSummary" class="badge">0 mon</span>
+                    </div>
+
+                    <div id="cartItems" class="cart-items empty-state">Dang nhap de tai gio hang.</div>
+
+                    <form id="checkoutForm" class="stack-form">
+                        <label>
+                            <span>Thanh toan</span>
+                            <select name="paymentMethod">
+                                <option value="COD">COD</option>
+                                <option value="Banking">Banking</option>
+                                <option value="Momo">Momo</option>
+                                <option value="VNPAY">VNPay</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Coupon</span>
+                            <input name="couponCode" type="text" placeholder="Nhap ma neu co">
+                        </label>
+                        <button class="secondary-button" type="submit">Checkout</button>
+                    </form>
+                    <p id="checkoutMessage" class="muted-text">San sang cho luong mua hang thuc te.</p>
+                </section>
+
+                <section class="card orders-card">
+                    <div class="section-heading compact">
+                        <div>
+                            <p class="section-kicker">History</p>
+                            <h2>Don hang gan day</h2>
+                        </div>
+                        <button id="loadOrdersButton" class="ghost-button compact-button" type="button">Tai lai</button>
+                    </div>
+                    <div id="ordersList" class="orders-list empty-state">Chua co don hang nao de hien thi.</div>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <template id="productCardTemplate">
+        <article class="product-card">
+            <div class="product-card-top">
+                <span class="category-chip"></span>
+                <span class="status-chip"></span>
+            </div>
+            <h3 class="product-name"></h3>
+            <p class="product-description"></p>
+            <div class="product-meta">
+                <strong class="product-price"></strong>
+                <span class="product-stock"></span>
+            </div>
+            <div class="product-actions">
+                <label class="quantity-picker">
+                    <span>SL</span>
+                    <input class="quantity-input" type="number" min="1" value="1">
+                </label>
+                <button class="primary-button compact-button add-cart-button" type="button">Them vao gio</button>
+            </div>
+        </article>
+    </template>
+
+    <script src="/app.js" defer></script>
+</body>
+</html>

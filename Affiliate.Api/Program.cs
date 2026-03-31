@@ -37,6 +37,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<VnPayOptions>(builder.Configuration.GetSection(VnPayOptions.SectionName));
 
 // FluentValidation
 builder.Services.AddValidatorsFromAssembly(typeof(RegisterValidator).Assembly);
@@ -116,12 +119,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -132,5 +134,6 @@ app.MapProductEndpoints();
 app.MapCartEndpoints();
 app.MapOrderEndpoints();
 app.MapCouponEndpoints();
+app.MapFallbackToFile("index.html");
 
 app.Run();

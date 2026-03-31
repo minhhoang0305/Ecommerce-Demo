@@ -174,3 +174,7 @@ D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\Affiliate.Api.pdb
 D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\Affiliate.Api.genruntimeconfig.cache
 D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\ref\Affiliate.Api.dll
 D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\Affiliate.Api.sourcelink.json
+D:\.Net\Affiliate\Affiliate.Api\bin\Debug\net10.0\Affiliate.Api.staticwebassets.runtime.json
+D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\compressed\w7tlg0q32k-{0}-1b0rmmgj0s-1b0rmmgj0s.gz
+D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\compressed\n4mntbqkcj-{0}-uig9pw5c09-uig9pw5c09.gz
+D:\.Net\Affiliate\Affiliate.Api\obj\Debug\net10.0\compressed\6tyzkhhlc3-{0}-martd8eqd5-martd8eqd5.gz
