@@ -14,24 +14,24 @@ public static class OrderEndpoint
             ClaimsPrincipal user,
             IMediator mediator) =>
         {
-            if (!TryGetUserId(user, out var userId))
+            if (!user.TryGetUserId(out var userId))
                 return Results.Unauthorized();
 
             var orders = await mediator.Send(new GetUserOrdersQuery(userId));
             return Results.Ok(orders);
-        }).RequireAuthorization("UserOnly");
+        }).RequireAuthorization("UserOnly").WithTags("Order");
 
         app.MapPost("api/v1/orders/checkout", async (
             CheckoutRequest request,
             ClaimsPrincipal user,
             IMediator mediator) =>
         {
-            if (!TryGetUserId(user, out var userId))
+            if (!user.TryGetUserId(out var userId))
                 return Results.Unauthorized();
 
             var order = await mediator.Send(new CheckoutCommand(userId, request.PaymentMethod, request.CouponCode));
             return Results.Ok(order);
-        }).RequireAuthorization("UserOnly");
+        }).RequireAuthorization("UserOnly").WithTags("Order");
 
         // Admin marks an order as COMPLETED -> awards loyalty points to the user.
         app.MapPost("api/v1/orders/{id:guid}/complete", async (
@@ -40,7 +40,7 @@ public static class OrderEndpoint
         {
             var result = await mediator.Send(new CompleteOrderCommand(id));
             return Results.Ok(result);
-        }).RequireAuthorization("AdminOnly");
+        }).RequireAuthorization("AdminOnly").WithTags("Order");
 
         app.MapPost("api/v1/payments/vnpay/create", async (
             CheckoutRequest request,
@@ -49,7 +49,7 @@ public static class OrderEndpoint
             IOrderRepository orderRepository,
             IVnPayService vnPayService) =>
         {
-            if (!TryGetUserId(user, out var userId))
+            if (!user.TryGetUserId(out var userId))
                 return Results.Unauthorized();
 
             var order = await orderRepository.CreatePendingVnPayOrderAsync(userId, request.CouponCode, httpContext.RequestAborted);
@@ -66,7 +66,7 @@ public static class OrderEndpoint
                 amount = order.FinalAmount,
                 paymentUrl
             });
-        }).RequireAuthorization("UserOnly");
+        }).RequireAuthorization("UserOnly").WithTags("Order");
 
         app.MapGet("api/v1/payments/vnpay/return", async (
             HttpContext httpContext,
@@ -104,7 +104,7 @@ public static class OrderEndpoint
             }
 
             return Results.Redirect(redirectUrl);
-        });
+        }).WithTags("Order");
 
         app.MapGet("api/v1/payments/vnpay/ipn", async (
             HttpContext httpContext,
@@ -154,13 +154,7 @@ public static class OrderEndpoint
             }
 
             return Results.Json(new { RspCode = "00", Message = "Confirm Success" });
-        });
-    }
-
-    private static bool TryGetUserId(ClaimsPrincipal user, out Guid userId)
-    {
-        var userIdClaim = user.FindFirstValue(ClaimTypes.NameIdentifier);
-        return Guid.TryParse(userIdClaim, out userId);
+        }).WithTags("Order");
     }
 
     private static string BuildAbsoluteUrl(HttpContext context, string path)

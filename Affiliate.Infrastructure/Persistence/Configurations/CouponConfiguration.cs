@@ -8,7 +8,9 @@ public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
         builder.ToTable("Coupon");
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Code).HasMaxLength(50).IsRequired();
-        builder.Property(c => c.DiscountPercent).HasColumnType("decimal(5,2)").IsRequired();
+        builder.Property(c => c.DiscountType).HasConversion<int>().IsRequired();
+        builder.Property(c => c.Value).HasColumnType("decimal(18,2)").IsRequired();
+        builder.Property(c => c.MinOrderValue).HasColumnType("decimal(18,2)").HasDefaultValue(0);
         builder.Property(c => c.StartDate).IsRequired();
         builder.Property(c => c.EndDate).IsRequired();
         builder.Property(c => c.IsActive).HasDefaultValue(true);

@@ -79,10 +79,14 @@ public class OrderRepository : IOrderRepository
             order.AddItem(product.Id, product.Name, product.Price, cartItem.Quantity);
         }
 
-        if (!string.IsNullOrWhiteSpace(couponCode))
+        var effectiveCouponCode = !string.IsNullOrWhiteSpace(couponCode)
+            ? couponCode
+            : cart.AppliedCouponCode;
+
+        if (!string.IsNullOrWhiteSpace(effectiveCouponCode))
         {
             var coupon = await _context.Coupon.FirstOrDefaultAsync(
-                x => x.Code == couponCode.Trim(),
+                x => x.Code == effectiveCouponCode.Trim(),
                 cancellationToken);
 
             if (coupon == null)
@@ -152,10 +156,14 @@ public class OrderRepository : IOrderRepository
             order.AddItem(product.Id, product.Name, product.Price, cartItem.Quantity);
         }
 
-        if (!string.IsNullOrWhiteSpace(couponCode))
+        var effectiveCouponCode = !string.IsNullOrWhiteSpace(couponCode)
+            ? couponCode
+            : cart.AppliedCouponCode;
+
+        if (!string.IsNullOrWhiteSpace(effectiveCouponCode))
         {
             var coupon = await _context.Coupon.FirstOrDefaultAsync(
-                x => x.Code == couponCode.Trim(),
+                x => x.Code == effectiveCouponCode.Trim(),
                 cancellationToken);
 
             if (coupon == null)

@@ -11,7 +11,7 @@ public static class AuthEndpoints
         {
             var userId = await mediator.Send(command);
             return Results.Ok(new { userId });
-        });
+        }).WithTags("Auth");
 
         app.MapPost("/api/v1/auth/login", async (
             LoginUserCommand command,
@@ -19,6 +19,6 @@ public static class AuthEndpoints
         {
             var authResponse = await mediator.Send(command);
             return Results.Ok(authResponse);
-        });
+        }).WithTags("Auth");
     }
 }

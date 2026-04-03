@@ -29,6 +29,8 @@ public class CartRepository : ICartRepository
         else
         {
             trackedCart.UserId = cart.UserId;
+            trackedCart.AppliedCouponCode = cart.AppliedCouponCode;
+            trackedCart.AppliedDiscount = cart.AppliedDiscount;
 
             foreach (var item in cart.Items)
             {

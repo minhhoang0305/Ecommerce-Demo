@@ -19,8 +19,10 @@ public class CreateCouponHandler : IRequestHandler<CreateCouponCommand, Guid>
         {
             Id = Guid.NewGuid(),
             Code = request.Code.Trim(),
-            DiscountPercent = request.DiscountPercent,
-            StartDate = DateTime.UtcNow,
+            DiscountType = request.DiscountType,
+            Value = request.Value,
+            MinOrderValue = request.MinOrderValue,
+            StartDate = request.StartDate,
             EndDate = request.EndDate,
             IsActive = request.IsActive,
             UsageLimit = request.UsageLimit,

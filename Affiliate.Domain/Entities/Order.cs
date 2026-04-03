@@ -1,4 +1,5 @@
 using System.Data.Common;
+using Affiliate.Domain.Entities;
 
 public class Orders
 {
@@ -40,7 +41,20 @@ public class Orders
         if (coupon.UsageLimit > 0 && coupon.TimesUsed >= coupon.UsageLimit)
             throw new ArgumentException("Coupon đã được sử dụng");
         
-        Discount = Math.Round(TotalAmount * (coupon.DiscountPercent /100),2);
+        if (TotalAmount < coupon.MinOrderValue)
+            throw new ArgumentException("Order total is not enough for this coupon");
+
+        Discount = coupon.DiscountType switch
+        {
+            DiscountType.PercentTag => Math.Round(TotalAmount * (coupon.Value / 100m), 2, MidpointRounding.AwayFromZero),
+            DiscountType.FixedAmount => Math.Round(Math.Min(coupon.Value, TotalAmount), 2, MidpointRounding.AwayFromZero),
+            _ => 0m
+        };
+
+        if (Discount < 0)
+            Discount = 0;
+        if (Discount > TotalAmount)
+            Discount = TotalAmount;
         CouponId = coupon.Id;
         Coupon = coupon;
     }

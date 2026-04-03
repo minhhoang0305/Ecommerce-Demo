@@ -1,3 +1,4 @@
+using Affiliate.Domain.Entities;
 using FluentValidation;
 
 public class CreateCouponValidator : AbstractValidator<CreateCouponCommand>
@@ -7,10 +8,21 @@ public class CreateCouponValidator : AbstractValidator<CreateCouponCommand>
         RuleFor(x => x.Code)
             .NotEmpty()
             .MaximumLength(50);
+        RuleFor(x => x.MinOrderValue)
+            .GreaterThanOrEqualTo(0);
 
-        RuleFor(x => x.DiscountPercent)
-            .GreaterThan(0)
-            .LessThanOrEqualTo(100);
+        When(x => x.DiscountType == Affiliate.Domain.Entities.DiscountType.PercentTag,() => 
+        {
+            RuleFor(x => x.Value)
+                .GreaterThan(0)
+                .LessThanOrEqualTo(100);
+        });
+
+        When(x => x.DiscountType == Affiliate.Domain.Entities.DiscountType.FixedAmount, ()=>
+        {
+            RuleFor(x => x.Value)
+                .GreaterThan(0);
+        });
 
         RuleFor(x => x.StartDate)
             .LessThan(x => x.EndDate);

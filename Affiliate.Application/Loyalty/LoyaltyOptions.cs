@@ -4,7 +4,7 @@ public class LoyaltyOptions
 {
     public const string SectionName = "Loyalty";
 
-    // 100,000 VND -> 1 point (default)
+    // 100,000 VND -> 1 point
     public decimal VndPerPoint { get; set; } = 100_000m;
 
     // Ranking thresholds based on total accumulated points.

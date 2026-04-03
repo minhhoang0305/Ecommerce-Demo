@@ -10,7 +10,7 @@ public static class ProductEndpoints
         {
             var productId = await mediator.Send(command);
             return Results.Ok(new { productId, message = "Product created successfully" });
-        }).RequireAuthorization("AdminOnly");
+        }).RequireAuthorization("AdminOnly").WithTags("Product");
 
         app.MapGet("/api/v1/product/{id}", async (
             Guid id,
@@ -21,7 +21,7 @@ public static class ProductEndpoints
                 return Results.NotFound(new { message = "Product not found" });
 
             return Results.Ok(product);
-        });
+        }).WithTags("Product");
 
         app.MapGet("/api/v1/products", async (
             int? page,
@@ -33,7 +33,7 @@ public static class ProductEndpoints
         {
             var products = await mediator.Send(new GetProductsQuery(page ?? 1, size ?? 10, category, minPrice, maxPrice));
             return Results.Ok(products);
-        });
+        }).WithTags("Product");
 
         app.MapDelete("/api/v1/product/{id}", async (
             Guid id,
@@ -41,7 +41,7 @@ public static class ProductEndpoints
         {
             await mediator.Send(new DeleteCommand(id));
             return Results.Ok(new { message = "Product deleted successfully" });
-        }).RequireAuthorization("AdminOnly");
+        }).RequireAuthorization("AdminOnly").WithTags("Product");
 
         app.MapPut("/api/v1/product/update", async (
             UpdateCommand command,
@@ -49,6 +49,6 @@ public static class ProductEndpoints
         {
             await mediator.Send(command);
             return Results.Ok(new { message = "Product updated successfully" });
-        }).RequireAuthorization("AdminOnly");
+        }).RequireAuthorization("AdminOnly").WithTags("Product");
     }
 }

@@ -9,21 +9,13 @@ public static class ReviewEndpoints
         app.MapGet("/api/v1/products/{productId:guid}/reviews", async (
             Guid productId,
             int? take,
-            IReviewRepository reviewRepository) =>
+            IMediator mediator) =>
         {
-            var reviews = await reviewRepository.GetByProductIdAsync(productId, take ?? 20);
+            var result = await mediator.Send(
+                new GetReviewCommand(productId, take));
 
-            var total = reviews.Count;
-            var average = total == 0 ? 0m : Math.Round((decimal)reviews.Sum(x => x.Rating) / total, 2, MidpointRounding.AwayFromZero);
-
-            var dto = new ProductReviewsDto(
-                productId,
-                average,
-                total,
-                reviews.Select(x => new ReviewItemDto(x.Id, x.UserId, x.Rating, x.Comment, x.CreatedAt)).ToList());
-
-            return Results.Ok(dto);
-        });
+            return Results.Ok(result);
+        }).WithTags("Review");
 
         app.MapPost("/api/v1/reviews", async (
             CreateReviewRequest request,
@@ -31,7 +23,7 @@ public static class ReviewEndpoints
             IMediator mediator) =>
         {
             var userIdClaim = user.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!Guid.TryParse(userIdClaim, out var userId))
+            if (!user.TryGetUserId(out var userId))
                 return Results.Unauthorized();
 
             var id = await mediator.Send(new CreateReviewCommand(
@@ -40,6 +32,6 @@ public static class ReviewEndpoints
                 request.Rating,
                 request.Comment));
             return Results.Ok(id);
-        }).RequireAuthorization("UserOnly");
+        }).RequireAuthorization("UserOnly").WithTags("Review");
     }
 }
